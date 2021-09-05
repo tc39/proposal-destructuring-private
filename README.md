@@ -34,7 +34,7 @@ This proposal avoids questions of reification of Private Fields by
 limiting this to syntax only. It also doesn't need to worry about
 "shorthand" syntax (`#x` in an expression being shorthand for
 `this.#x`), because the Committee has decided we will not persue
-shorthand syntax after the [Ergonomic Brand Checks](ergo-brand-check)
+shorthand syntax after the [Ergonomic Brand Checks][ergo-brand-check]
 Proposal.
 
 ## Related
