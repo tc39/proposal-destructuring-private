@@ -1,0 +1,17 @@
+{
+  "private": true,
+  "name": "proposal-destructuring-private",
+  "description": "A proposal integrate private fields and destructuring",
+  "scripts": {
+    "build": "ecmarkup spec.emu index.html"
+  },
+  "homepage": "https://github.com/tc39/proposal-destructuring-private#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tc39/proposal-destructuring-private.git"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "ecmarkup": "^9.1"
+  }
+}

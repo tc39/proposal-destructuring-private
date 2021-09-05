@@ -1,0 +1,247 @@
+<!doctype html>
+<meta charset="utf8">
+<link rel="stylesheet" href="./spec.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css">
+<script src="./spec.js"></script>
+<pre class="metadata">
+title: Destructuring Private Fields
+status: proposal
+stage: 0
+contributors: Justin Ridgewell
+location: https://tc39.es/proposal-destructuring-private/
+</pre>
+
+<style>
+#sec-placeholder, [href="#sec-placeholder"] {
+  display: none;
+}
+</style>
+<script>
+  Array.from(document.querySelectorAll('ol.toc li'), function (node) {
+    if (node.querySelector(':scope > [href="#sec-placeholder"]')) {
+      node.style.display = 'none';
+    }
+  });
+</script>
+
+<emu-clause id="sec-scope">
+  <h1>Scope</h1>
+  <p>
+    This is the spec text of the <a href="https://github.com/tc39/proposal-destructuring-private/">Destructuring Private Fields proposal</a> in ECMAScript.
+  </p>
+</emu-clause>
+
+<emu-clause id="sec-placeholder"><h1>Placeholder to ensure correct clause numbering</h1></emu-clause>
+<emu-clause id="sec-placeholder"><h1>Placeholder to ensure correct clause numbering</h1></emu-clause>
+<emu-clause id="sec-placeholder"><h1>Placeholder to ensure correct clause numbering</h1></emu-clause>
+<emu-clause id="sec-placeholder"><h1>Placeholder to ensure correct clause numbering</h1></emu-clause>
+<emu-clause id="sec-placeholder"><h1>Placeholder to ensure correct clause numbering</h1></emu-clause>
+<emu-clause id="sec-placeholder"><h1>Placeholder to ensure correct clause numbering</h1></emu-clause>
+<emu-clause id="sec-placeholder"><h1>Placeholder to ensure correct clause numbering</h1></emu-clause>
+<emu-clause id="sec-placeholder"><h1>Placeholder to ensure correct clause numbering</h1></emu-clause>
+<emu-clause id="sec-placeholder"><h1>Placeholder to ensure correct clause numbering</h1></emu-clause>
+<emu-clause id="sec-placeholder"><h1>Placeholder to ensure correct clause numbering</h1></emu-clause>
+<emu-clause id="sec-placeholder"><h1>Placeholder to ensure correct clause numbering</h1></emu-clause>
+
+<emu-clause id="sec-ecmascript-language-expressions">
+  <h1>ECMAScript Language: Expressions</h1>
+  ...
+  <emu-clause id="sec-placeholder"><h1>Placeholder to ensure correct clause numbering</h1></emu-clause>
+  <emu-clause id="sec-placeholder"><h1>Placeholder to ensure correct clause numbering</h1></emu-clause>
+  <emu-clause id="sec-placeholder"><h1>Placeholder to ensure correct clause numbering</h1></emu-clause>
+  <emu-clause id="sec-placeholder"><h1>Placeholder to ensure correct clause numbering</h1></emu-clause>
+  <emu-clause id="sec-placeholder"><h1>Placeholder to ensure correct clause numbering</h1></emu-clause>
+  <emu-clause id="sec-placeholder"><h1>Placeholder to ensure correct clause numbering</h1></emu-clause>
+  <emu-clause id="sec-placeholder"><h1>Placeholder to ensure correct clause numbering</h1></emu-clause>
+  <emu-clause id="sec-placeholder"><h1>Placeholder to ensure correct clause numbering</h1></emu-clause>
+  <emu-clause id="sec-placeholder"><h1>Placeholder to ensure correct clause numbering</h1></emu-clause>
+  <emu-clause id="sec-placeholder"><h1>Placeholder to ensure correct clause numbering</h1></emu-clause>
+  <emu-clause id="sec-placeholder"><h1>Placeholder to ensure correct clause numbering</h1></emu-clause>
+  <emu-clause id="sec-placeholder"><h1>Placeholder to ensure correct clause numbering</h1></emu-clause>
+  <emu-clause id="sec-placeholder"><h1>Placeholder to ensure correct clause numbering</h1></emu-clause>
+  <emu-clause id="sec-placeholder"><h1>Placeholder to ensure correct clause numbering</h1></emu-clause>
+
+  <emu-clause id="sec-assignment-operators">
+    <h1>Assignment Operators</h1>
+    ...
+    <emu-clause id="sec-placeholder"><h1>Static Semantics: Early Errors</h1></emu-clause>
+    <emu-clause id="sec-placeholder"><h1>Runtime Semantics: Evaluation</h1></emu-clause>
+    <emu-clause id="sec-placeholder"><h1>ApplyStringOrNumericBinaryOperator</h1></emu-clause>
+    <emu-clause id="sec-placeholder"><h1>EvaluateStringOrNumericBinaryExpression</h1></emu-clause>
+
+    <emu-clause id="sec-destructuring-assignment">
+      <h1>Destructuring Assignment</h1>
+
+      <h2>Supplemental Syntax</h2>
+      <p>In certain circumstances when processing an instance of the production
+        <br>
+        <emu-grammar>AssignmentExpression : LeftHandSideExpression `=` AssignmentExpression</emu-grammar>
+        <br>
+        the interpretation of |LeftHandSideExpression| is refined using the following grammar:</p>
+      <emu-grammar type="definition">
+        AssignmentPattern[Yield, Await] :
+          ObjectAssignmentPattern[?Yield, ?Await]
+          ArrayAssignmentPattern[?Yield, ?Await]
+
+        ObjectAssignmentPattern[Yield, Await] :
+          `{` `}`
+          `{` AssignmentRestProperty[?Yield, ?Await] `}`
+          `{` AssignmentPropertyList[?Yield, ?Await] `}`
+          `{` AssignmentPropertyList[?Yield, ?Await] `,` AssignmentRestProperty[?Yield, ?Await]? `}`
+
+        ArrayAssignmentPattern[Yield, Await] :
+          `[` Elision? AssignmentRestElement[?Yield, ?Await]? `]`
+          `[` AssignmentElementList[?Yield, ?Await] `]`
+          `[` AssignmentElementList[?Yield, ?Await] `,` Elision? AssignmentRestElement[?Yield, ?Await]? `]`
+
+        AssignmentRestProperty[Yield, Await] :
+          `...` DestructuringAssignmentTarget[?Yield, ?Await]
+
+        AssignmentPropertyList[Yield, Await] :
+          AssignmentProperty[?Yield, ?Await]
+          AssignmentPropertyList[?Yield, ?Await] `,` AssignmentProperty[?Yield, ?Await]
+
+        AssignmentElementList[Yield, Await] :
+          AssignmentElisionElement[?Yield, ?Await]
+          AssignmentElementList[?Yield, ?Await] `,` AssignmentElisionElement[?Yield, ?Await]
+
+        AssignmentElisionElement[Yield, Await] :
+          Elision? AssignmentElement[?Yield, ?Await]
+
+        AssignmentProperty[Yield, Await] :
+          IdentifierReference[?Yield, ?Await] Initializer[+In, ?Yield, ?Await]?
+          PropertyName[?Yield, ?Await] `:` AssignmentElement[?Yield, ?Await]
+          <ins>PrivateIdentifier `:` AssignmentElement[?Yield, ?Await]</ins>
+
+        AssignmentElement[Yield, Await] :
+          DestructuringAssignmentTarget[?Yield, ?Await] Initializer[+In, ?Yield, ?Await]?
+
+        AssignmentRestElement[Yield, Await] :
+          `...` DestructuringAssignmentTarget[?Yield, ?Await]
+
+        DestructuringAssignmentTarget[Yield, Await] :
+          LeftHandSideExpression[?Yield, ?Await]
+      </emu-grammar>
+
+      <emu-clause id="sec-placeholder"><h1>Static Semantics: Early Errors</h1></emu-clause>
+
+      <emu-clause id="sec-runtime-semantics-propertydestructuringassignmentevaluation" type="sdo" aoid="PropertyDestructuringAssignmentEvaluation">
+        <h1>Runtime Semantics: PropertyDestructuringAssignmentEvaluation</h1>
+        <p>With parameter _value_.</p>
+
+        <emu-note>The following operations collect a list of all destructured property names.</emu-note>
+
+        <emu-grammar>AssignmentPropertyList : AssignmentPropertyList `,` AssignmentProperty</emu-grammar>
+        <emu-alg>
+          1. Let _propertyNames_ be ? PropertyDestructuringAssignmentEvaluation of |AssignmentPropertyList| with argument _value_.
+          1. Let _nextNames_ be ? PropertyDestructuringAssignmentEvaluation of |AssignmentProperty| with argument _value_.
+          1. Return the list-concatenation of _propertyNames_ and _nextNames_.
+        </emu-alg>
+
+        <emu-grammar>AssignmentProperty : IdentifierReference Initializer?</emu-grammar>
+        <emu-alg>
+          1. Let _P_ be StringValue of |IdentifierReference|.
+          1. Let _lref_ be ? ResolveBinding(_P_).
+          1. Let _v_ be ? GetV(_value_, _P_).
+          1. If |Initializer_opt| is present and _v_ is *undefined*, then
+            1. If IsAnonymousFunctionDefinition(|Initializer|) is *true*, then
+              1. Set _v_ to the result of performing NamedEvaluation for |Initializer| with argument _P_.
+            1. Else,
+              1. Let _defaultValue_ be the result of evaluating |Initializer|.
+              1. Set _v_ to ? GetValue(_defaultValue_).
+          1. Perform ? PutValue(_lref_, _v_).
+          1. Return a List whose sole element is _P_.
+        </emu-alg>
+
+        <emu-grammar>AssignmentProperty : PropertyName `:` AssignmentElement</emu-grammar>
+        <emu-alg>
+          1. Let _name_ be the result of evaluating |PropertyName|.
+          1. ReturnIfAbrupt(_name_).
+          1. Perform ? KeyedDestructuringAssignmentEvaluation of |AssignmentElement| with _value_ and _name_ as the arguments.
+          1. Return a List whose sole element is _name_.
+        </emu-alg>
+
+        <ins class="block">
+        <emu-grammar>AssignmentProperty : PrivateIdentifier `:` AssignmentElement</emu-grammar>
+        <emu-alg>
+          1. Let _privateIdentifier_ be the StringValue of |PrivateIdentifier|.
+          1. Let _privateEnv_ be the running execution context's PrivateEnvironment.
+          1. Let _privateName_ be ! ResolvePrivateIdentifier(_privateEnv_, _privateIdentifier_).
+          1. Perform ? KeyedDestructuringAssignmentEvaluation of |AssignmentElement| with _value_ and _privateName_ as the arguments.
+          1. Return a new empty List.
+        </emu-alg>
+        <emu-note>PropertyDestructuringAssignmentEvaluation returns a list of property names which are kept so they can be excluded from a AssignmentRestProperty. Because AssignmentRestProperty already does not copy private fields to the new object, we do not need to add our _privateName_ to the list.</emu-note>
+        </ins>
+      </emu-clause>
+
+      <emu-clause id="sec-placeholder"><h1>Runtime Semantics: PropertyDestructuringAssignmentEvaluation</h1></emu-clause>
+      <emu-clause id="sec-placeholder"><h1>Runtime Semantics: RestDestructuringAssignmentEvaluation</h1></emu-clause>
+      <emu-clause id="sec-placeholder"><h1>Runtime Semantics: IteratorDestructuringAssignmentEvaluation</h1></emu-clause>
+
+      <emu-clause id="sec-runtime-semantics-keyeddestructuringassignmentevaluation" type="sdo" aoid="KeyedDestructuringAssignmentEvaluation">
+        <h1>Runtime Semantics: KeyedDestructuringAssignmentEvaluation</h1>
+        <p>With parameters _value_ and _propertyName_.</p>
+        <emu-grammar>AssignmentElement : DestructuringAssignmentTarget Initializer?</emu-grammar>
+        <emu-alg>
+          1. If |DestructuringAssignmentTarget| is neither an |ObjectLiteral| nor an |ArrayLiteral|, then
+            1. Let _lref_ be the result of evaluating |DestructuringAssignmentTarget|.
+            1. ReturnIfAbrupt(_lref_).
+          1. Let _v_ be ~empty~.
+          1. <ins>If _propertyName_ is a Private Name, then</ins>
+            1. <ins>Set _v_ to ? PrivateGet(_propertyName_, _value_).</ins>
+          1. Else,
+            1. Set _v_ to ? GetV(_value_, _propertyName_).
+          1. If |Initializer| is present and _v_ is *undefined*, then
+            1. If IsAnonymousFunctionDefinition(|Initializer|) and IsIdentifierRef of |DestructuringAssignmentTarget| are both *true*, then
+              1. Let _rhsValue_ be ? NamedEvaluation of |Initializer| with argument _lref_.[[ReferencedName]].
+            1. Else,
+              1. Let _defaultValue_ be the result of evaluating |Initializer|.
+              1. Let _rhsValue_ be ? GetValue(_defaultValue_).
+          1. Else, let _rhsValue_ be _v_.
+          1. If |DestructuringAssignmentTarget| is an |ObjectLiteral| or an |ArrayLiteral|, then
+            1. Let _assignmentPattern_ be the |AssignmentPattern| that is covered by |DestructuringAssignmentTarget|.
+            1. Return the result of performing DestructuringAssignmentEvaluation of _assignmentPattern_ with _rhsValue_ as the argument.
+          1. Return ? PutValue(_lref_, _rhsValue_).
+        </emu-alg>
+      </emu-clause>
+    </emu-clause>
+  </emu-clause>
+</emu-clause>
+
+<emu-clause id="sec-placeholder"><h1>Placeholder to ensure correct clause numbering</h1></emu-clause>
+
+<emu-clause id="sec-ecmascript-language-functions-and-classes">
+  <h1>ECMAScript Language: Functions and Classes</h1>
+  ...
+  <emu-clause id="sec-placeholder"><h1>Parameter Lists</h1></emu-clause>
+  <emu-clause id="sec-placeholder"><h1>Function Definitions</h1></emu-clause>
+  <emu-clause id="sec-placeholder"><h1>Arrow Function Definitions</h1></emu-clause>
+  <emu-clause id="sec-placeholder"><h1>Method Definitions</h1></emu-clause>
+  <emu-clause id="sec-placeholder"><h1>Generator Function Definitions</h1></emu-clause>
+  <emu-clause id="sec-placeholder"><h1>Async Generator Function Definitions</h1></emu-clause>
+
+  <emu-clause id="sec-class-definitions">
+    <h1>Class Definitions</h1>
+    ...
+    <emu-clause id="sec-placeholder"><h1>Static Semantics: Early Errors</h1></emu-clause>
+    <emu-clause id="sec-placeholder"><h1>Static Semantics: ClassElementKind</h1></emu-clause>
+    <emu-clause id="sec-placeholder"><h1>Static Semantics: ConstructorMethod</h1></emu-clause>
+    <emu-clause id="sec-placeholder"><h1>Static Semantics: IsStatic</h1></emu-clause>
+    <emu-clause id="sec-placeholder"><h1>Static Semantics: NonConstructorElements</h1></emu-clause>
+    <emu-clause id="sec-placeholder"><h1>Static Semantics: PrototypePropertyNameList</h1></emu-clause>
+
+    <emu-clause id="sec-static-semantics-allprivateidentifiersvalid" type="sdo" aoid="AllPrivateIdentifiersValid">
+      <h1>Static Semantics: AllPrivateIdentifiersValid</h1>
+      <p>With parameter _names_.</p>
+
+      <ins class="block">
+      <emu-grammar>AssignmentProperty : PrivateIdentifier `:` AssignmentElement</emu-grammar>
+      <emu-alg>
+        1. If _names_ contains the StringValue of |PrivateIdentifier|, then
+          1. Return AllPrivateIdentifiersValid of |AssignmentElement| with argument _names_.
+        1. Return *false*.
+      </emu-alg>
+      </ins>
+    </emu-clause>
+  </emu-clause>
+</emu-clause>
