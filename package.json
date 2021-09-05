@@ -5,10 +5,10 @@
   "scripts": {
     "build": "ecmarkup spec.emu index.html"
   },
-  "homepage": "https://github.com/tc39/proposal-destructuring-private#readme",
+  "homepage": "https://github.com/jridgewell/proposal-destructuring-private#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tc39/proposal-destructuring-private.git"
+    "url": "git+https://github.com/jridgewell/proposal-destructuring-private.git"
   },
   "license": "MIT",
   "devDependencies": {

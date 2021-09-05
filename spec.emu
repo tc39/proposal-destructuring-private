@@ -8,7 +8,7 @@ title: Destructuring Private Fields
 status: proposal
 stage: 0
 contributors: Justin Ridgewell
-location: https://tc39.es/proposal-destructuring-private/
+location: https://justin.ridgewell.name/proposal-destructuring-private/
 </pre>
 
 <style>
@@ -27,7 +27,7 @@ location: https://tc39.es/proposal-destructuring-private/
 <emu-clause id="sec-scope">
   <h1>Scope</h1>
   <p>
-    This is the spec text of the <a href="https://github.com/tc39/proposal-destructuring-private/">Destructuring Private Fields proposal</a> in ECMAScript.
+    This is the spec text of the <a href="https://github.com/jridgewell/proposal-destructuring-private/">Destructuring Private Fields proposal</a> in ECMAScript.
   </p>
 </emu-clause>
 
