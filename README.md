@@ -10,7 +10,7 @@ class Foo {
     console.log(this.#x); // => 1
     
     const { #x: x } = this;
-    console.log(x); // => "1"
+    console.log(x); // => 1
   }
 }
 ```
