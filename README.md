@@ -21,7 +21,7 @@ class Foo {
 
 ## Status
 
-Current [Stage](https://tc39.es/process-document/): 0
+Current [Stage](https://tc39.es/process-document/): 2
 
 ## Motivation
 
