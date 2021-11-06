@@ -400,6 +400,15 @@ location: https://justin.ridgewell.name/proposal-destructuring-private/
         1. Return *false*.
       </emu-alg>
       </ins>
+
+      <ins class="block">
+      <emu-grammar>BindingProperty : PrivateIdentifier `:` BindingElement</emu-grammar>
+      <emu-alg>
+        1. If _names_ contains the StringValue of |PrivateIdentifier|, then
+          1. Return AllPrivateIdentifiersValid of |BindingElement| with argument _names_.
+        1. Return *false*.
+      </emu-alg>
+      </ins>
     </emu-clause>
   </emu-clause>
 </emu-clause>
