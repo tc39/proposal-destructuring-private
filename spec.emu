@@ -186,11 +186,12 @@ location: https://justin.ridgewell.name/proposal-destructuring-private/
           1. If |DestructuringAssignmentTarget| is neither an |ObjectLiteral| nor an |ArrayLiteral|, then
             1. Let _lref_ be the result of evaluating |DestructuringAssignmentTarget|.
             1. ReturnIfAbrupt(_lref_).
-          1. Let _v_ be ~empty~.
+          1. <del>Let _v_ to ? GetV(_value_, _propertyName_).</del>
+          1. <ins>Let _v_ be ~empty~.</ins>
           1. <ins>If _propertyName_ is a Private Name, then</ins>
             1. <ins>Set _v_ to ? PrivateGet(_propertyName_, _value_).</ins>
-          1. Else,
-            1. Set _v_ to ? GetV(_value_, _propertyName_).
+          1. <ins>Else,</ins>
+            1. <ins>Set _v_ to ? GetV(_value_, _propertyName_).</ins>
           1. If |Initializer| is present and _v_ is *undefined*, then
             1. If IsAnonymousFunctionDefinition(|Initializer|) and IsIdentifierRef of |DestructuringAssignmentTarget| are both *true*, then
               1. Let _rhsValue_ be ? NamedEvaluation of |Initializer| with argument _lref_.[[ReferencedName]].
@@ -208,7 +209,164 @@ location: https://justin.ridgewell.name/proposal-destructuring-private/
   </emu-clause>
 </emu-clause>
 
-<emu-clause id="sec-placeholder"><h1>Placeholder to ensure correct clause numbering</h1></emu-clause>
+<emu-clause id="sec-ecmascript-language-statements-and-declarations">
+  <h1>ECMAScript Language: Statements and Declarations</h1>
+  ...
+  <emu-clause id="sec-placeholder"><h1>Statement Semantics</h1></emu-clause>
+  <emu-clause id="sec-placeholder"><h1>Block</h1></emu-clause>
+
+  <emu-clause id="sec-declarations-and-the-variable-statement">
+    <h1>Declarations and the Variable Statement</h1>
+    ...
+    <emu-clause id="sec-placeholder"><h1>Let and Const Declarations</h1></emu-clause>
+    <emu-clause id="sec-placeholder"><h1>Variable Statement</h1></emu-clause>
+
+    <emu-clause id="sec-destructuring-binding-patterns">
+      <h1>Destructuring Binding Patterns</h1>
+      <h2>Syntax</h2>
+      <emu-grammar type="definition">
+        BindingPattern[Yield, Await] :
+          ObjectBindingPattern[?Yield, ?Await]
+          ArrayBindingPattern[?Yield, ?Await]
+
+        ObjectBindingPattern[Yield, Await] :
+          `{` `}`
+          `{` BindingRestProperty[?Yield, ?Await] `}`
+          `{` BindingPropertyList[?Yield, ?Await] `}`
+          `{` BindingPropertyList[?Yield, ?Await] `,` BindingRestProperty[?Yield, ?Await]? `}`
+
+        ArrayBindingPattern[Yield, Await] :
+          `[` Elision? BindingRestElement[?Yield, ?Await]? `]`
+          `[` BindingElementList[?Yield, ?Await] `]`
+          `[` BindingElementList[?Yield, ?Await] `,` Elision? BindingRestElement[?Yield, ?Await]? `]`
+
+        BindingRestProperty[Yield, Await] :
+          `...` BindingIdentifier[?Yield, ?Await]
+
+        BindingPropertyList[Yield, Await] :
+          BindingProperty[?Yield, ?Await]
+          BindingPropertyList[?Yield, ?Await] `,` BindingProperty[?Yield, ?Await]
+
+        BindingElementList[Yield, Await] :
+          BindingElisionElement[?Yield, ?Await]
+          BindingElementList[?Yield, ?Await] `,` BindingElisionElement[?Yield, ?Await]
+
+        BindingElisionElement[Yield, Await] :
+          Elision? BindingElement[?Yield, ?Await]
+
+        BindingProperty[Yield, Await] :
+          SingleNameBinding[?Yield, ?Await]
+          PropertyName[?Yield, ?Await] `:` BindingElement[?Yield, ?Await]
+          <ins>PrivateIdentifier `:` BindingElement[?Yield, ?Await]</ins>
+
+        BindingElement[Yield, Await] :
+          SingleNameBinding[?Yield, ?Await]
+          BindingPattern[?Yield, ?Await] Initializer[+In, ?Yield, ?Await]?
+
+        SingleNameBinding[Yield, Await] :
+          BindingIdentifier[?Yield, ?Await] Initializer[+In, ?Yield, ?Await]?
+
+        BindingRestElement[Yield, Await] :
+          `...` BindingIdentifier[?Yield, ?Await]
+          `...` BindingPattern[?Yield, ?Await]
+      </emu-grammar>
+
+      <emu-clause id="sec-destructuring-binding-patterns-runtime-semantics-propertybindinginitialization" type="sdo">
+        <h1>
+          Runtime Semantics: PropertyBindingInitialization (
+            _value_: unknown,
+            _environment_: unknown,
+          )
+        </h1>
+        <dl class="header">
+          <dt>description</dt>
+          <dd>It collects a list of all bound property names rather than just empty completion.</dd>
+        </dl>
+        <emu-grammar>BindingPropertyList : BindingPropertyList `,` BindingProperty</emu-grammar>
+        <emu-alg>
+          1. Let _boundNames_ be ? PropertyBindingInitialization of |BindingPropertyList| with arguments _value_ and _environment_.
+          1. Let _nextNames_ be ? PropertyBindingInitialization of |BindingProperty| with arguments _value_ and _environment_.
+          1. Return the list-concatenation of _boundNames_ and _nextNames_.
+        </emu-alg>
+
+        <emu-grammar>BindingProperty : SingleNameBinding</emu-grammar>
+        <emu-alg>
+          1. Let _name_ be the string that is the only element of BoundNames of |SingleNameBinding|.
+          1. Perform ? KeyedBindingInitialization for |SingleNameBinding| using _value_, _environment_, and _name_ as the arguments.
+          1. Return a List whose sole element is _name_.
+        </emu-alg>
+
+        <emu-grammar>BindingProperty : PropertyName `:` BindingElement</emu-grammar>
+        <emu-alg>
+          1. Let _P_ be the result of evaluating |PropertyName|.
+          1. ReturnIfAbrupt(_P_).
+          1. Perform ? KeyedBindingInitialization of |BindingElement| with _value_, _environment_, and _P_ as the arguments.
+          1. Return a List whose sole element is _P_.
+        </emu-alg>
+
+        <ins class="block">
+        <emu-grammar>BindingProperty : PrivateIdentifier `:` BindingElement</emu-grammar>
+        <emu-alg>
+          1. Let _privateIdentifier_ be the StringValue of |PrivateIdentifier|.
+          1. Let _privateEnv_ be the running execution context's PrivateEnvironment.
+          1. Let _privateName_ be ! ResolvePrivateIdentifier(_privateEnv_, _privateIdentifier_).
+          1. Perform ? KeyedBindingInitialization of |BindingElement| with _value_, _environment_, and _privateName_ as the arguments.
+          1. Return a new empty List.
+        </emu-alg>
+        </ins>
+      </emu-clause>
+
+      <emu-clause id="sec-placeholder"><h1>Runtime Semantics: RestBindingInitialization</h1></emu-clause>
+
+      <emu-clause id="sec-runtime-semantics-keyedbindinginitialization" type="sdo">
+        <h1>
+          Runtime Semantics: KeyedBindingInitialization (
+            _value_: unknown,
+            _environment_: unknown,
+            _propertyName_: unknown,
+          )
+        </h1>
+        <dl class="header"></dl>
+
+        <emu-note>
+          <p>When *undefined* is passed for _environment_ it indicates that a PutValue operation should be used to assign the initialization value. This is the case for formal parameter lists of non-strict functions. In that case the formal parameter bindings are preinitialized in order to deal with the possibility of multiple parameters with the same name.</p>
+        </emu-note>
+        <emu-grammar>BindingElement : BindingPattern Initializer?</emu-grammar>
+        <emu-alg>
+          1. <del>Let _v_ to ? GetV(_value_, _propertyName_).</del>
+          1. <ins>Let _v_ be ~empty~.</ins>
+          1. <ins>If _propertyName_ is a Private Name, then</ins>
+            1. <ins>Set _v_ to ? PrivateGet(_propertyName_, _value_).</ins>
+          1. <ins>Else,</ins>
+            1. <ins>Set _v_ to ? GetV(_value_, _propertyName_).</ins>
+          1. If |Initializer| is present and _v_ is *undefined*, then
+            1. Let _defaultValue_ be the result of evaluating |Initializer|.
+            1. Set _v_ to ? GetValue(_defaultValue_).
+          1. Return the result of performing BindingInitialization for |BindingPattern| passing _v_ and _environment_ as arguments.
+        </emu-alg>
+        <emu-grammar>SingleNameBinding : BindingIdentifier Initializer?</emu-grammar>
+        <emu-alg>
+          1. Let _bindingId_ be StringValue of |BindingIdentifier|.
+          1. Let _lhs_ be ? ResolveBinding(_bindingId_, _environment_).
+          1. <del>Let _v_ to ? GetV(_value_, _propertyName_).</del>
+          1. <ins>Let _v_ be ~empty~.</ins>
+          1. <ins>If _propertyName_ is a Private Name, then</ins>
+            1. <ins>Set _v_ to ? PrivateGet(_propertyName_, _value_).</ins>
+          1. <ins>Else,</ins>
+            1. <ins>Set _v_ to ? GetV(_value_, _propertyName_).</ins>
+          1. If |Initializer| is present and _v_ is *undefined*, then
+            1. If IsAnonymousFunctionDefinition(|Initializer|) is *true*, then
+              1. Set _v_ to the result of performing NamedEvaluation for |Initializer| with argument _bindingId_.
+            1. Else,
+              1. Let _defaultValue_ be the result of evaluating |Initializer|.
+              1. Set _v_ to ? GetValue(_defaultValue_).
+          1. If _environment_ is *undefined*, return ? PutValue(_lhs_, _v_).
+          1. Return InitializeReferencedBinding(_lhs_, _v_).
+        </emu-alg>
+      </emu-clause>
+    </emu-clause>
+  </emu-clause>
+</emu-clause>
 
 <emu-clause id="sec-ecmascript-language-functions-and-classes">
   <h1>ECMAScript Language: Functions and Classes</h1>
