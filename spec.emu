@@ -54,84 +54,12 @@ location: https://justin.ridgewell.name/proposal-destructuring-private/
 
     <emu-clause id="sec-static-semantics-propname" oldids="sec-object-initializer-static-semantics-propname,sec-method-definitions-static-semantics-propname,sec-generator-function-definitions-static-semantics-propname,sec-async-generator-function-definitions-static-semantics-propname,sec-class-definitions-static-semantics-propname,sec-async-function-definitions-static-semantics-PropName" type="sdo">
       <h1>Static Semantics: PropName</h1>
-      <emu-grammar>PropertyDefinition : IdentifierReference</emu-grammar>
-      <emu-alg>
-        1. Return StringValue of |IdentifierReference|.
-      </emu-alg>
-      <emu-grammar>PropertyDefinition : `...` AssignmentExpression</emu-grammar>
-      <emu-alg>
-        1. Return ~empty~.
-      </emu-alg>
-      <emu-grammar>PropertyDefinition : PropertyName `:` AssignmentExpression</emu-grammar>
-      <emu-alg>
-        1. Return PropName of |PropertyName|.
-      </emu-alg>
       <ins class="block">
       <emu-grammar>PropertyDefinition : PrivateIdentifier `:` AssignmentExpression</emu-grammar>
       <emu-alg>
         1. Return ~empty~.
       </emu-alg>
       </ins>
-      <emu-grammar>LiteralPropertyName : IdentifierName</emu-grammar>
-      <emu-alg>
-        1. Return StringValue of |IdentifierName|.
-      </emu-alg>
-      <emu-grammar>LiteralPropertyName : StringLiteral</emu-grammar>
-      <emu-alg>
-        1. Return the SV of |StringLiteral|.
-      </emu-alg>
-      <emu-grammar>LiteralPropertyName : NumericLiteral</emu-grammar>
-      <emu-alg>
-        1. Let _nbr_ be the NumericValue of |NumericLiteral|.
-        1. Return ! ToString(_nbr_).
-      </emu-alg>
-      <emu-grammar>ComputedPropertyName : `[` AssignmentExpression `]`</emu-grammar>
-      <emu-alg>
-        1. Return ~empty~.
-      </emu-alg>
-      <emu-grammar>
-        MethodDefinition :
-          ClassElementName `(` UniqueFormalParameters `)` `{` FunctionBody `}`
-          `get` ClassElementName `(` `)` `{` FunctionBody `}`
-          `set` ClassElementName `(` PropertySetParameterList `)` `{` FunctionBody `}`
-      </emu-grammar>
-      <emu-alg>
-        1. Return PropName of |ClassElementName|.
-      </emu-alg>
-      <emu-grammar>GeneratorMethod : `*` ClassElementName `(` UniqueFormalParameters `)` `{` GeneratorBody `}`</emu-grammar>
-      <emu-alg>
-        1. Return PropName of |ClassElementName|.
-      </emu-alg>
-      <emu-grammar>AsyncGeneratorMethod : `async` `*` ClassElementName `(` UniqueFormalParameters `)` `{` AsyncGeneratorBody `}`</emu-grammar>
-      <emu-alg>
-        1. Return PropName of |ClassElementName|.
-      </emu-alg>
-      <emu-grammar>ClassElement : ClassStaticBlock</emu-grammar>
-      <emu-alg>
-        1. Return ~empty~.
-      </emu-alg>
-      <emu-grammar>ClassElement : `;`</emu-grammar>
-      <emu-alg>
-        1. Return ~empty~.
-      </emu-alg>
-      <emu-grammar>
-        AsyncMethod : `async` ClassElementName `(` UniqueFormalParameters `)` `{` AsyncFunctionBody `}`
-      </emu-grammar>
-      <emu-alg>
-        1. Return PropName of |ClassElementName|.
-      </emu-alg>
-      <emu-grammar>
-        FieldDefinition : ClassElementName Initializer?
-      </emu-grammar>
-      <emu-alg>
-        1. Return PropName of |ClassElementName|.
-      </emu-alg>
-      <emu-grammar>
-        ClassElementName : PrivateIdentifier
-      </emu-grammar>
-      <emu-alg>
-        1. Return ~empty~.
-      </emu-alg>
     </emu-clause>
   </emu-clause>
 </emu-clause>
@@ -194,31 +122,10 @@ location: https://justin.ridgewell.name/proposal-destructuring-private/
         Initializer[In, Yield, Await] :
           `=` AssignmentExpression[?In, ?Yield, ?Await]
       </emu-grammar>
-      <emu-note>
-        <p>|MethodDefinition| is defined in <emu-xref href="#sec-method-definitions"></emu-xref>.</p>
-      </emu-note>
-      <emu-note>
-        <p>In certain contexts, |ObjectLiteral| is used as a cover grammar for a more restricted secondary grammar. The |CoverInitializedName| production is necessary to fully cover these secondary grammars. However, use of this production results in an early Syntax Error in normal contexts where an actual |ObjectLiteral| is expected.</p>
-      </emu-note>
 
       <emu-clause id="sec-object-initializer-static-semantics-early-errors" oldids="sec-__proto__-property-names-in-object-initializers">
         <h1>Static Semantics: Early Errors</h1>
-        <emu-grammar>PropertyDefinition : MethodDefinition</emu-grammar>
-        <ul>
-          <li>
-            It is a Syntax Error if HasDirectSuper of |MethodDefinition| is *true*.
-          </li>
-          <li>
-            It is a Syntax Error if PrivateBoundIdentifiers of |MethodDefinition| is not empty.
-          </li>
-        </ul>
         <p>In addition to describing an actual object initializer the |ObjectLiteral| productions are also used as a cover grammar for |ObjectAssignmentPattern| and may be recognized as part of a |CoverParenthesizedExpressionAndArrowParameterList|. When |ObjectLiteral| appears in a context where |ObjectAssignmentPattern| is required the following Early Error rules are <b>not</b> applied. In addition, they are not applied when initially parsing a |CoverParenthesizedExpressionAndArrowParameterList| or |CoverCallExpressionAndAsyncArrowHead|.</p>
-        <emu-grammar>PropertyDefinition : CoverInitializedName</emu-grammar>
-        <ul>
-          <li>
-            Always throw a Syntax Error if code matches this production.
-          </li>
-        </ul>
         <ins class="block">
         <emu-grammar>PropertyDefinition : PrivateIdentifier `:` AssignmentExpression</emu-grammar>
         <ul>
@@ -227,22 +134,6 @@ location: https://justin.ridgewell.name/proposal-destructuring-private/
           </li>
         </ul>
         </ins>
-        <emu-note>
-          <p><del>This production</del><ins>These productions</ins> exists so that |ObjectLiteral| can serve as a cover grammar for |ObjectAssignmentPattern|. <del>It</del><ins>They</ins> cannot occur in an actual object initializer.</p>
-        </emu-note>
-        <emu-grammar>
-          ObjectLiteral : `{` PropertyDefinitionList `}`
-
-          ObjectLiteral : `{` PropertyDefinitionList `,` `}`
-        </emu-grammar>
-        <ul>
-          <li>
-            It is a Syntax Error if PropertyNameList of |PropertyDefinitionList| contains any duplicate entries for *"__proto__"* and at least two of those entries were obtained from productions of the form <emu-grammar>PropertyDefinition : PropertyName `:` AssignmentExpression</emu-grammar>. This rule is not applied if this |ObjectLiteral| is contained within a |Script| that is being parsed for JSON.parse (see step <emu-xref href="#step-json-parse-parse"></emu-xref> of <emu-xref href="#sec-json.parse">JSON.parse</emu-xref>).
-          </li>
-        </ul>
-        <emu-note>
-          <p>The List returned by PropertyNameList does not include property names defined using a |ComputedPropertyName|.</p>
-        </emu-note>
       </emu-clause>
     </emu-clause>
   </emu-clause>
@@ -324,40 +215,13 @@ location: https://justin.ridgewell.name/proposal-destructuring-private/
       <emu-clause id="sec-placeholder"><h1>Static Semantics: Early Errors</h1></emu-clause>
 
       <emu-clause id="sec-runtime-semantics-propertydestructuringassignmentevaluation" type="sdo" aoid="PropertyDestructuringAssignmentEvaluation">
-        <h1>Runtime Semantics: PropertyDestructuringAssignmentEvaluation</h1>
-        <p>With parameter _value_.</p>
+        <h1>
+          Runtime Semantics: DestructuringAssignmentEvaluation (
+            _value_: unknown,
+          )
+        </h1>
 
         <emu-note>The following operations collect a list of all destructured property names.</emu-note>
-
-        <emu-grammar>AssignmentPropertyList : AssignmentPropertyList `,` AssignmentProperty</emu-grammar>
-        <emu-alg>
-          1. Let _propertyNames_ be ? PropertyDestructuringAssignmentEvaluation of |AssignmentPropertyList| with argument _value_.
-          1. Let _nextNames_ be ? PropertyDestructuringAssignmentEvaluation of |AssignmentProperty| with argument _value_.
-          1. Return the list-concatenation of _propertyNames_ and _nextNames_.
-        </emu-alg>
-
-        <emu-grammar>AssignmentProperty : IdentifierReference Initializer?</emu-grammar>
-        <emu-alg>
-          1. Let _P_ be StringValue of |IdentifierReference|.
-          1. Let _lref_ be ? ResolveBinding(_P_).
-          1. Let _v_ be ? GetV(_value_, _P_).
-          1. If |Initializer_opt| is present and _v_ is *undefined*, then
-            1. If IsAnonymousFunctionDefinition(|Initializer|) is *true*, then
-              1. Set _v_ to the result of performing NamedEvaluation for |Initializer| with argument _P_.
-            1. Else,
-              1. Let _defaultValue_ be the result of evaluating |Initializer|.
-              1. Set _v_ to ? GetValue(_defaultValue_).
-          1. Perform ? PutValue(_lref_, _v_).
-          1. Return a List whose sole element is _P_.
-        </emu-alg>
-
-        <emu-grammar>AssignmentProperty : PropertyName `:` AssignmentElement</emu-grammar>
-        <emu-alg>
-          1. Let _name_ be the result of evaluating |PropertyName|.
-          1. ReturnIfAbrupt(_name_).
-          1. Perform ? KeyedDestructuringAssignmentEvaluation of |AssignmentElement| with _value_ and _name_ as the arguments.
-          1. Return a List whose sole element is _name_.
-        </emu-alg>
 
         <ins class="block">
         <emu-grammar>AssignmentProperty : PrivateIdentifier `:` AssignmentElement</emu-grammar>
@@ -377,8 +241,12 @@ location: https://justin.ridgewell.name/proposal-destructuring-private/
       <emu-clause id="sec-placeholder"><h1>Runtime Semantics: IteratorDestructuringAssignmentEvaluation</h1></emu-clause>
 
       <emu-clause id="sec-runtime-semantics-keyeddestructuringassignmentevaluation" type="sdo" aoid="KeyedDestructuringAssignmentEvaluation">
-        <h1>Runtime Semantics: KeyedDestructuringAssignmentEvaluation</h1>
-        <p>With parameters _value_ and _propertyName_.</p>
+        <h1>
+          Runtime Semantics: KeyedDestructuringAssignmentEvaluation (
+            _value_: unknown,
+            _propertyName_: unknown,
+          )
+        </h1>
         <emu-grammar>AssignmentElement : DestructuringAssignmentTarget Initializer?</emu-grammar>
         <emu-alg>
           1. If |DestructuringAssignmentTarget| is neither an |ObjectLiteral| nor an |ArrayLiteral|, then
@@ -478,28 +346,6 @@ location: https://justin.ridgewell.name/proposal-destructuring-private/
           <dt>description</dt>
           <dd>It collects a list of all bound property names rather than just empty completion.</dd>
         </dl>
-        <emu-grammar>BindingPropertyList : BindingPropertyList `,` BindingProperty</emu-grammar>
-        <emu-alg>
-          1. Let _boundNames_ be ? PropertyBindingInitialization of |BindingPropertyList| with arguments _value_ and _environment_.
-          1. Let _nextNames_ be ? PropertyBindingInitialization of |BindingProperty| with arguments _value_ and _environment_.
-          1. Return the list-concatenation of _boundNames_ and _nextNames_.
-        </emu-alg>
-
-        <emu-grammar>BindingProperty : SingleNameBinding</emu-grammar>
-        <emu-alg>
-          1. Let _name_ be the string that is the only element of BoundNames of |SingleNameBinding|.
-          1. Perform ? KeyedBindingInitialization for |SingleNameBinding| using _value_, _environment_, and _name_ as the arguments.
-          1. Return a List whose sole element is _name_.
-        </emu-alg>
-
-        <emu-grammar>BindingProperty : PropertyName `:` BindingElement</emu-grammar>
-        <emu-alg>
-          1. Let _P_ be the result of evaluating |PropertyName|.
-          1. ReturnIfAbrupt(_P_).
-          1. Perform ? KeyedBindingInitialization of |BindingElement| with _value_, _environment_, and _P_ as the arguments.
-          1. Return a List whose sole element is _P_.
-        </emu-alg>
-
         <ins class="block">
         <emu-grammar>BindingProperty : PrivateIdentifier `:` BindingElement</emu-grammar>
         <emu-alg>
