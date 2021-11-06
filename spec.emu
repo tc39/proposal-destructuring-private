@@ -31,39 +31,237 @@ location: https://justin.ridgewell.name/proposal-destructuring-private/
   </p>
 </emu-clause>
 
-<emu-clause id="sec-placeholder"><h1>Placeholder to ensure correct clause numbering</h1></emu-clause>
-<emu-clause id="sec-placeholder"><h1>Placeholder to ensure correct clause numbering</h1></emu-clause>
-<emu-clause id="sec-placeholder"><h1>Placeholder to ensure correct clause numbering</h1></emu-clause>
-<emu-clause id="sec-placeholder"><h1>Placeholder to ensure correct clause numbering</h1></emu-clause>
-<emu-clause id="sec-placeholder"><h1>Placeholder to ensure correct clause numbering</h1></emu-clause>
-<emu-clause id="sec-placeholder"><h1>Placeholder to ensure correct clause numbering</h1></emu-clause>
-<emu-clause id="sec-placeholder"><h1>Placeholder to ensure correct clause numbering</h1></emu-clause>
-<emu-clause id="sec-placeholder"><h1>Placeholder to ensure correct clause numbering</h1></emu-clause>
-<emu-clause id="sec-placeholder"><h1>Placeholder to ensure correct clause numbering</h1></emu-clause>
-<emu-clause id="sec-placeholder"><h1>Placeholder to ensure correct clause numbering</h1></emu-clause>
-<emu-clause id="sec-placeholder"><h1>Placeholder to ensure correct clause numbering</h1></emu-clause>
+<emu-clause id="sec-placeholder"><h1>2</h1></emu-clause>
+<emu-clause id="sec-placeholder"><h1>3</h1></emu-clause>
+<emu-clause id="sec-placeholder"><h1>4</h1></emu-clause>
+<emu-clause id="sec-placeholder"><h1>5</h1></emu-clause>
+<emu-clause id="sec-placeholder"><h1>6</h1></emu-clause>
+<emu-clause id="sec-placeholder"><h1>7</h1></emu-clause>
+
+<emu-clause id="sec-syntax-directed-operations">
+  <h1>Syntax-Directed Operations</h1>
+  <emu-clause id="sec-placeholder"><h1>1</h1></emu-clause>
+  <emu-clause id="sec-placeholder"><h1>2</h1></emu-clause>
+  <emu-clause id="sec-placeholder"><h1>3</h1></emu-clause>
+  <emu-clause id="sec-placeholder"><h1>4</h1></emu-clause>
+
+  <emu-clause id="sec-syntax-directed-operations-miscellaneous">
+    <h1>Miscellaneous</h1>
+    <emu-clause id="sec-placeholder"><h1>RS: InstantiateFunctionObject</h1></emu-clause>
+    <emu-clause id="sec-placeholder"><h1>RS: BindingInitialization</h1></emu-clause>
+    <emu-clause id="sec-placeholder"><h1>RS: IteratorBindingInitialization</h1></emu-clause>
+    <emu-clause id="sec-placeholder"><h1>SS: AssignmentTargetType</h1></emu-clause>
+
+    <emu-clause id="sec-static-semantics-propname" oldids="sec-object-initializer-static-semantics-propname,sec-method-definitions-static-semantics-propname,sec-generator-function-definitions-static-semantics-propname,sec-async-generator-function-definitions-static-semantics-propname,sec-class-definitions-static-semantics-propname,sec-async-function-definitions-static-semantics-PropName" type="sdo">
+      <h1>Static Semantics: PropName</h1>
+      <emu-grammar>PropertyDefinition : IdentifierReference</emu-grammar>
+      <emu-alg>
+        1. Return StringValue of |IdentifierReference|.
+      </emu-alg>
+      <emu-grammar>PropertyDefinition : `...` AssignmentExpression</emu-grammar>
+      <emu-alg>
+        1. Return ~empty~.
+      </emu-alg>
+      <emu-grammar>PropertyDefinition : PropertyName `:` AssignmentExpression</emu-grammar>
+      <emu-alg>
+        1. Return PropName of |PropertyName|.
+      </emu-alg>
+      <ins class="block">
+      <emu-grammar>PropertyDefinition : PrivateIdentifier `:` AssignmentExpression</emu-grammar>
+      <emu-alg>
+        1. Return ~empty~.
+      </emu-alg>
+      </ins>
+      <emu-grammar>LiteralPropertyName : IdentifierName</emu-grammar>
+      <emu-alg>
+        1. Return StringValue of |IdentifierName|.
+      </emu-alg>
+      <emu-grammar>LiteralPropertyName : StringLiteral</emu-grammar>
+      <emu-alg>
+        1. Return the SV of |StringLiteral|.
+      </emu-alg>
+      <emu-grammar>LiteralPropertyName : NumericLiteral</emu-grammar>
+      <emu-alg>
+        1. Let _nbr_ be the NumericValue of |NumericLiteral|.
+        1. Return ! ToString(_nbr_).
+      </emu-alg>
+      <emu-grammar>ComputedPropertyName : `[` AssignmentExpression `]`</emu-grammar>
+      <emu-alg>
+        1. Return ~empty~.
+      </emu-alg>
+      <emu-grammar>
+        MethodDefinition :
+          ClassElementName `(` UniqueFormalParameters `)` `{` FunctionBody `}`
+          `get` ClassElementName `(` `)` `{` FunctionBody `}`
+          `set` ClassElementName `(` PropertySetParameterList `)` `{` FunctionBody `}`
+      </emu-grammar>
+      <emu-alg>
+        1. Return PropName of |ClassElementName|.
+      </emu-alg>
+      <emu-grammar>GeneratorMethod : `*` ClassElementName `(` UniqueFormalParameters `)` `{` GeneratorBody `}`</emu-grammar>
+      <emu-alg>
+        1. Return PropName of |ClassElementName|.
+      </emu-alg>
+      <emu-grammar>AsyncGeneratorMethod : `async` `*` ClassElementName `(` UniqueFormalParameters `)` `{` AsyncGeneratorBody `}`</emu-grammar>
+      <emu-alg>
+        1. Return PropName of |ClassElementName|.
+      </emu-alg>
+      <emu-grammar>ClassElement : ClassStaticBlock</emu-grammar>
+      <emu-alg>
+        1. Return ~empty~.
+      </emu-alg>
+      <emu-grammar>ClassElement : `;`</emu-grammar>
+      <emu-alg>
+        1. Return ~empty~.
+      </emu-alg>
+      <emu-grammar>
+        AsyncMethod : `async` ClassElementName `(` UniqueFormalParameters `)` `{` AsyncFunctionBody `}`
+      </emu-grammar>
+      <emu-alg>
+        1. Return PropName of |ClassElementName|.
+      </emu-alg>
+      <emu-grammar>
+        FieldDefinition : ClassElementName Initializer?
+      </emu-grammar>
+      <emu-alg>
+        1. Return PropName of |ClassElementName|.
+      </emu-alg>
+      <emu-grammar>
+        ClassElementName : PrivateIdentifier
+      </emu-grammar>
+      <emu-alg>
+        1. Return ~empty~.
+      </emu-alg>
+    </emu-clause>
+  </emu-clause>
+</emu-clause>
+
+<emu-clause id="sec-placeholder"><h1>9</h1></emu-clause>
+<emu-clause id="sec-placeholder"><h1>10</h1></emu-clause>
+<emu-clause id="sec-placeholder"><h1>11</h1></emu-clause>
+<emu-clause id="sec-placeholder"><h1>12</h1></emu-clause>
 
 <emu-clause id="sec-ecmascript-language-expressions">
   <h1>ECMAScript Language: Expressions</h1>
-  ...
-  <emu-clause id="sec-placeholder"><h1>Placeholder to ensure correct clause numbering</h1></emu-clause>
-  <emu-clause id="sec-placeholder"><h1>Placeholder to ensure correct clause numbering</h1></emu-clause>
-  <emu-clause id="sec-placeholder"><h1>Placeholder to ensure correct clause numbering</h1></emu-clause>
-  <emu-clause id="sec-placeholder"><h1>Placeholder to ensure correct clause numbering</h1></emu-clause>
-  <emu-clause id="sec-placeholder"><h1>Placeholder to ensure correct clause numbering</h1></emu-clause>
-  <emu-clause id="sec-placeholder"><h1>Placeholder to ensure correct clause numbering</h1></emu-clause>
-  <emu-clause id="sec-placeholder"><h1>Placeholder to ensure correct clause numbering</h1></emu-clause>
-  <emu-clause id="sec-placeholder"><h1>Placeholder to ensure correct clause numbering</h1></emu-clause>
-  <emu-clause id="sec-placeholder"><h1>Placeholder to ensure correct clause numbering</h1></emu-clause>
-  <emu-clause id="sec-placeholder"><h1>Placeholder to ensure correct clause numbering</h1></emu-clause>
-  <emu-clause id="sec-placeholder"><h1>Placeholder to ensure correct clause numbering</h1></emu-clause>
-  <emu-clause id="sec-placeholder"><h1>Placeholder to ensure correct clause numbering</h1></emu-clause>
-  <emu-clause id="sec-placeholder"><h1>Placeholder to ensure correct clause numbering</h1></emu-clause>
-  <emu-clause id="sec-placeholder"><h1>Placeholder to ensure correct clause numbering</h1></emu-clause>
+  <emu-clause id="sec-placeholder"><h1>1</h1></emu-clause>
+
+  <emu-clause id="sec-primary-expression">
+    <h1>Primary Expression</h1>
+    <emu-clause id="sec-placeholder"><h1>The `this` Keyword</h1></emu-clause>
+    <emu-clause id="sec-placeholder"><h1>Identifier Reference</h1></emu-clause>
+    <emu-clause id="sec-placeholder"><h1>Literals</h1></emu-clause>
+    <emu-clause id="sec-placeholder"><h1>Array Initializer</h1></emu-clause>
+
+    <emu-clause id="sec-object-initializer">
+      <h1>Object Initializer</h1>
+      <emu-note>
+        <p>An object initializer is an expression describing the initialization of an Object, written in a form resembling a literal. It is a list of zero or more pairs of property keys and associated values, enclosed in curly brackets. The values need not be literals; they are evaluated each time the object initializer is evaluated.</p>
+      </emu-note>
+      <h2>Syntax</h2>
+      <emu-grammar type="definition">
+        ObjectLiteral[Yield, Await] :
+          `{` `}`
+          `{` PropertyDefinitionList[?Yield, ?Await] `}`
+          `{` PropertyDefinitionList[?Yield, ?Await] `,` `}`
+
+        PropertyDefinitionList[Yield, Await] :
+          PropertyDefinition[?Yield, ?Await]
+          PropertyDefinitionList[?Yield, ?Await] `,` PropertyDefinition[?Yield, ?Await]
+
+        PropertyDefinition[Yield, Await] :
+          IdentifierReference[?Yield, ?Await]
+          CoverInitializedName[?Yield, ?Await]
+          PropertyName[?Yield, ?Await] `:` AssignmentExpression[+In, ?Yield, ?Await]
+          <ins>PrivateIdentifier[?Yield, ?Await] `:` AssignmentExpression[+In, ?Yield, ?Await]</ins>
+          MethodDefinition[?Yield, ?Await]
+          `...` AssignmentExpression[+In, ?Yield, ?Await]
+
+        PropertyName[Yield, Await] :
+          LiteralPropertyName
+          ComputedPropertyName[?Yield, ?Await]
+
+        LiteralPropertyName :
+          IdentifierName
+          StringLiteral
+          NumericLiteral
+
+        ComputedPropertyName[Yield, Await] :
+          `[` AssignmentExpression[+In, ?Yield, ?Await] `]`
+
+        CoverInitializedName[Yield, Await] :
+          IdentifierReference[?Yield, ?Await] Initializer[+In, ?Yield, ?Await]
+
+        Initializer[In, Yield, Await] :
+          `=` AssignmentExpression[?In, ?Yield, ?Await]
+      </emu-grammar>
+      <emu-note>
+        <p>|MethodDefinition| is defined in <emu-xref href="#sec-method-definitions"></emu-xref>.</p>
+      </emu-note>
+      <emu-note>
+        <p>In certain contexts, |ObjectLiteral| is used as a cover grammar for a more restricted secondary grammar. The |CoverInitializedName| production is necessary to fully cover these secondary grammars. However, use of this production results in an early Syntax Error in normal contexts where an actual |ObjectLiteral| is expected.</p>
+      </emu-note>
+
+      <emu-clause id="sec-object-initializer-static-semantics-early-errors" oldids="sec-__proto__-property-names-in-object-initializers">
+        <h1>Static Semantics: Early Errors</h1>
+        <emu-grammar>PropertyDefinition : MethodDefinition</emu-grammar>
+        <ul>
+          <li>
+            It is a Syntax Error if HasDirectSuper of |MethodDefinition| is *true*.
+          </li>
+          <li>
+            It is a Syntax Error if PrivateBoundIdentifiers of |MethodDefinition| is not empty.
+          </li>
+        </ul>
+        <p>In addition to describing an actual object initializer the |ObjectLiteral| productions are also used as a cover grammar for |ObjectAssignmentPattern| and may be recognized as part of a |CoverParenthesizedExpressionAndArrowParameterList|. When |ObjectLiteral| appears in a context where |ObjectAssignmentPattern| is required the following Early Error rules are <b>not</b> applied. In addition, they are not applied when initially parsing a |CoverParenthesizedExpressionAndArrowParameterList| or |CoverCallExpressionAndAsyncArrowHead|.</p>
+        <emu-grammar>PropertyDefinition : CoverInitializedName</emu-grammar>
+        <ul>
+          <li>
+            Always throw a Syntax Error if code matches this production.
+          </li>
+        </ul>
+        <ins class="block">
+        <emu-grammar>PropertyDefinition : PrivateIdentifier `:` AssignmentExpression</emu-grammar>
+        <ul>
+          <li>
+            Always throw a Syntax Error if code matches this production.
+          </li>
+        </ul>
+        </ins>
+        <emu-note>
+          <p><del>This production</del><ins>These productions</ins> exists so that |ObjectLiteral| can serve as a cover grammar for |ObjectAssignmentPattern|. <del>It</del><ins>They</ins> cannot occur in an actual object initializer.</p>
+        </emu-note>
+        <emu-grammar>
+          ObjectLiteral : `{` PropertyDefinitionList `}`
+
+          ObjectLiteral : `{` PropertyDefinitionList `,` `}`
+        </emu-grammar>
+        <ul>
+          <li>
+            It is a Syntax Error if PropertyNameList of |PropertyDefinitionList| contains any duplicate entries for *"__proto__"* and at least two of those entries were obtained from productions of the form <emu-grammar>PropertyDefinition : PropertyName `:` AssignmentExpression</emu-grammar>. This rule is not applied if this |ObjectLiteral| is contained within a |Script| that is being parsed for JSON.parse (see step <emu-xref href="#step-json-parse-parse"></emu-xref> of <emu-xref href="#sec-json.parse">JSON.parse</emu-xref>).
+          </li>
+        </ul>
+        <emu-note>
+          <p>The List returned by PropertyNameList does not include property names defined using a |ComputedPropertyName|.</p>
+        </emu-note>
+      </emu-clause>
+    </emu-clause>
+  </emu-clause>
+
+  <emu-clause id="sec-placeholder"><h1>3</h1></emu-clause>
+  <emu-clause id="sec-placeholder"><h1>4</h1></emu-clause>
+  <emu-clause id="sec-placeholder"><h1>5</h1></emu-clause>
+  <emu-clause id="sec-placeholder"><h1>6</h1></emu-clause>
+  <emu-clause id="sec-placeholder"><h1>7</h1></emu-clause>
+  <emu-clause id="sec-placeholder"><h1>8</h1></emu-clause>
+  <emu-clause id="sec-placeholder"><h1>9</h1></emu-clause>
+  <emu-clause id="sec-placeholder"><h1>10</h1></emu-clause>
+  <emu-clause id="sec-placeholder"><h1>11</h1></emu-clause>
+  <emu-clause id="sec-placeholder"><h1>12</h1></emu-clause>
+  <emu-clause id="sec-placeholder"><h1>13</h1></emu-clause>
+  <emu-clause id="sec-placeholder"><h1>14</h1></emu-clause>
 
   <emu-clause id="sec-assignment-operators">
     <h1>Assignment Operators</h1>
-    ...
     <emu-clause id="sec-placeholder"><h1>Static Semantics: Early Errors</h1></emu-clause>
     <emu-clause id="sec-placeholder"><h1>Runtime Semantics: Evaluation</h1></emu-clause>
     <emu-clause id="sec-placeholder"><h1>ApplyStringOrNumericBinaryOperator</h1></emu-clause>
@@ -211,13 +409,11 @@ location: https://justin.ridgewell.name/proposal-destructuring-private/
 
 <emu-clause id="sec-ecmascript-language-statements-and-declarations">
   <h1>ECMAScript Language: Statements and Declarations</h1>
-  ...
-  <emu-clause id="sec-placeholder"><h1>Statement Semantics</h1></emu-clause>
-  <emu-clause id="sec-placeholder"><h1>Block</h1></emu-clause>
+  <emu-clause id="sec-placeholder"><h1>1</h1></emu-clause>
+  <emu-clause id="sec-placeholder"><h1>2</h1></emu-clause>
 
   <emu-clause id="sec-declarations-and-the-variable-statement">
     <h1>Declarations and the Variable Statement</h1>
-    ...
     <emu-clause id="sec-placeholder"><h1>Let and Const Declarations</h1></emu-clause>
     <emu-clause id="sec-placeholder"><h1>Variable Statement</h1></emu-clause>
 
@@ -326,7 +522,6 @@ location: https://justin.ridgewell.name/proposal-destructuring-private/
             _propertyName_: unknown,
           )
         </h1>
-        <dl class="header"></dl>
 
         <emu-note>
           <p>When *undefined* is passed for _environment_ it indicates that a PutValue operation should be used to assign the initialization value. This is the case for formal parameter lists of non-strict functions. In that case the formal parameter bindings are preinitialized in order to deal with the possibility of multiple parameters with the same name.</p>
@@ -370,17 +565,15 @@ location: https://justin.ridgewell.name/proposal-destructuring-private/
 
 <emu-clause id="sec-ecmascript-language-functions-and-classes">
   <h1>ECMAScript Language: Functions and Classes</h1>
-  ...
-  <emu-clause id="sec-placeholder"><h1>Parameter Lists</h1></emu-clause>
-  <emu-clause id="sec-placeholder"><h1>Function Definitions</h1></emu-clause>
-  <emu-clause id="sec-placeholder"><h1>Arrow Function Definitions</h1></emu-clause>
-  <emu-clause id="sec-placeholder"><h1>Method Definitions</h1></emu-clause>
-  <emu-clause id="sec-placeholder"><h1>Generator Function Definitions</h1></emu-clause>
-  <emu-clause id="sec-placeholder"><h1>Async Generator Function Definitions</h1></emu-clause>
+  <emu-clause id="sec-placeholder"><h1>1</h1></emu-clause>
+  <emu-clause id="sec-placeholder"><h1>2</h1></emu-clause>
+  <emu-clause id="sec-placeholder"><h1>3</h1></emu-clause>
+  <emu-clause id="sec-placeholder"><h1>4</h1></emu-clause>
+  <emu-clause id="sec-placeholder"><h1>5</h1></emu-clause>
+  <emu-clause id="sec-placeholder"><h1>6</h1></emu-clause>
 
   <emu-clause id="sec-class-definitions">
     <h1>Class Definitions</h1>
-    ...
     <emu-clause id="sec-placeholder"><h1>Static Semantics: Early Errors</h1></emu-clause>
     <emu-clause id="sec-placeholder"><h1>Static Semantics: ClassElementKind</h1></emu-clause>
     <emu-clause id="sec-placeholder"><h1>Static Semantics: ConstructorMethod</h1></emu-clause>
