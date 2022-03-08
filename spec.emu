@@ -216,7 +216,7 @@ location: https://justin.ridgewell.name/proposal-destructuring-private/
 
       <emu-clause id="sec-runtime-semantics-propertydestructuringassignmentevaluation" type="sdo" aoid="PropertyDestructuringAssignmentEvaluation">
         <h1>
-          Runtime Semantics: DestructuringAssignmentEvaluation (
+          Runtime Semantics: PropertyDestructuringAssignmentEvaluation (
             _value_: unknown,
           )
         </h1>
