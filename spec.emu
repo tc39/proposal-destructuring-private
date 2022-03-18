@@ -228,7 +228,7 @@ location: https://justin.ridgewell.name/proposal-destructuring-private/
         <emu-alg>
           1. Let _privateIdentifier_ be the StringValue of |PrivateIdentifier|.
           1. Let _privateEnv_ be the running execution context's PrivateEnvironment.
-          1. Let _privateName_ be ! ResolvePrivateIdentifier(_privateEnv_, _privateIdentifier_).
+          1. Let _privateName_ be ResolvePrivateIdentifier(_privateEnv_, _privateIdentifier_).
           1. Perform ? KeyedDestructuringAssignmentEvaluation of |AssignmentElement| with _value_ and _privateName_ as the arguments.
           1. Return a new empty List.
         </emu-alg>
@@ -253,11 +253,10 @@ location: https://justin.ridgewell.name/proposal-destructuring-private/
             1. Let _lref_ be the result of evaluating |DestructuringAssignmentTarget|.
             1. ReturnIfAbrupt(_lref_).
           1. <del>Let _v_ to ? GetV(_value_, _propertyName_).</del>
-          1. <ins>Let _v_ be ~empty~.</ins>
           1. <ins>If _propertyName_ is a Private Name, then</ins>
-            1. <ins>Set _v_ to ? PrivateGet(_propertyName_, _value_).</ins>
+            1. <ins>Let _v_ be ? PrivateGet(_propertyName_, _value_).</ins>
           1. <ins>Else,</ins>
-            1. <ins>Set _v_ to ? GetV(_value_, _propertyName_).</ins>
+            1. <ins>Let _v_ be ? GetV(_value_, _propertyName_).</ins>
           1. If |Initializer| is present and _v_ is *undefined*, then
             1. If IsAnonymousFunctionDefinition(|Initializer|) and IsIdentifierRef of |DestructuringAssignmentTarget| are both *true*, then
               1. Let _rhsValue_ be ? NamedEvaluation of |Initializer| with argument _lref_.[[ReferencedName]].
@@ -351,7 +350,7 @@ location: https://justin.ridgewell.name/proposal-destructuring-private/
         <emu-alg>
           1. Let _privateIdentifier_ be the StringValue of |PrivateIdentifier|.
           1. Let _privateEnv_ be the running execution context's PrivateEnvironment.
-          1. Let _privateName_ be ! ResolvePrivateIdentifier(_privateEnv_, _privateIdentifier_).
+          1. Let _privateName_ be ResolvePrivateIdentifier(_privateEnv_, _privateIdentifier_).
           1. Perform ? KeyedBindingInitialization of |BindingElement| with _value_, _environment_, and _privateName_ as the arguments.
           1. Return a new empty List.
         </emu-alg>
@@ -375,11 +374,10 @@ location: https://justin.ridgewell.name/proposal-destructuring-private/
         <emu-grammar>BindingElement : BindingPattern Initializer?</emu-grammar>
         <emu-alg>
           1. <del>Let _v_ to ? GetV(_value_, _propertyName_).</del>
-          1. <ins>Let _v_ be ~empty~.</ins>
           1. <ins>If _propertyName_ is a Private Name, then</ins>
-            1. <ins>Set _v_ to ? PrivateGet(_propertyName_, _value_).</ins>
+            1. <ins>Let _v_ be ? PrivateGet(_propertyName_, _value_).</ins>
           1. <ins>Else,</ins>
-            1. <ins>Set _v_ to ? GetV(_value_, _propertyName_).</ins>
+            1. <ins>Let _v_ be ? GetV(_value_, _propertyName_).</ins>
           1. If |Initializer| is present and _v_ is *undefined*, then
             1. Let _defaultValue_ be the result of evaluating |Initializer|.
             1. Set _v_ to ? GetValue(_defaultValue_).
@@ -390,11 +388,10 @@ location: https://justin.ridgewell.name/proposal-destructuring-private/
           1. Let _bindingId_ be StringValue of |BindingIdentifier|.
           1. Let _lhs_ be ? ResolveBinding(_bindingId_, _environment_).
           1. <del>Let _v_ to ? GetV(_value_, _propertyName_).</del>
-          1. <ins>Let _v_ be ~empty~.</ins>
           1. <ins>If _propertyName_ is a Private Name, then</ins>
-            1. <ins>Set _v_ to ? PrivateGet(_propertyName_, _value_).</ins>
+            1. <ins>Let _v_ be ? PrivateGet(_propertyName_, _value_).</ins>
           1. <ins>Else,</ins>
-            1. <ins>Set _v_ to ? GetV(_value_, _propertyName_).</ins>
+            1. <ins>Let _v_ be ? GetV(_value_, _propertyName_).</ins>
           1. If |Initializer| is present and _v_ is *undefined*, then
             1. If IsAnonymousFunctionDefinition(|Initializer|) is *true*, then
               1. Set _v_ to the result of performing NamedEvaluation for |Initializer| with argument _bindingId_.
