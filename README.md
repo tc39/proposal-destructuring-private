@@ -1,6 +1,6 @@
 # proposal-destructuring-private
 
-A proposal integrate private fields and destructuring.
+A proposal to integrate private fields and destructuring.
 
 ```js
 class Foo {
